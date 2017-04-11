@@ -33,7 +33,7 @@ function pp_btw2017_uu_admin_settings_form() {
 		);
 
 		$wks = array(
-				"167	=>	"Waldeck",
+				"167"	=>	"Waldeck",
 				"168"	=>	"Kassel",
 				"169"	=>	"Werra-Meißner – Hersfeld-Rotenburg",
 				"170"	=>	"Schwalm-Eder",
