@@ -88,7 +88,7 @@ function pp_btw2017_uu_block($op = 'list', $delta = '', $edit = array()) {
 					$params[] = "'ls'";
 				if (variable_get('pp_btw2017_landesliste_end', NULL))
 					$params[] = "'le'";
-				for ($wk = 1; $wk<=55; $wk++) {
+				for ($wk = 167; $wk<=188; $wk++) {
 					if (variable_get('pp_btw2017_wk'.$wk, NULL))
 						$params[] = $wk;
 				}

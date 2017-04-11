@@ -10,7 +10,7 @@ function btw2017_show(arr) {
 					content += '<li><a href="'+data.data.liste.uu+'" style="white-space: nowrap;">'+data.data.liste.title+'</a>'+btw2017_sammelbalken(data.data.liste.info)+'</li>';
 				}
 
-				for (var wk=1; wk<=55; wk++) {
+				for (var wk=167; wk<=188; wk++) {
 					if (jQuery.inArray(wk, arr) != -1) {
 						if (data.data[wk]) {
 							content += '<li><a href="'+data.data[wk].uu+'" style="white-space: nowrap;">'+data.data[wk].title+'</a>'+btw2017_sammelbalken(data.data[wk].info)+'</li>';
