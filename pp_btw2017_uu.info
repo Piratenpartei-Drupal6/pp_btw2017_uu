@@ -1,0 +1,6 @@
+; $Id$
+package = Piratenpartei
+name = Piratenpartei BTW 2017 UU
+description = Zeigt Sammelbalken zu auswählbaren Wahlkreisen und der Landesliste.
+core = 6.x
+version = "6.x-1.0"

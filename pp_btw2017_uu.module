@@ -1,0 +1,108 @@
+<?php
+
+
+/**
+ * Implementation of hook_meu()
+ */
+function pp_btw2017_uu_menu() {
+  $items = array();
+
+  $items['admin/settings/piraten/btw2017'] = array(
+    'title' => 'Bundestagswahl 2017',
+    'description' => 'Unterstützungsunterschriften',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pp_btw2017_uu_admin_settings_form'),
+    'access arguments' => array('administer pp_btw2017_uu'),
+    'file' => 'pp_btw2017_uu_settings.admin.inc'
+  );
+
+  return $items;
+}
+
+
+/**
+* Display help and module information.
+* @param path
+*   Which path of the site we're displaying help.
+* @param arg
+*   Array that holds the current path as would be returned from arg() function.
+* @return
+*   help text for the path.
+*/
+function pp_btw2017_uu_help($path, $arg) {
+  $output = '';
+  switch ($path) {
+    case "admin/help#pp_btw2017_uu":
+      $output = '<p>'. t("Zeigt Sammelbalken zu auswählbaren Wahlkreisen und der Landesliste").'</p>';
+      break;
+  }
+  return $output;
+} // function pp_btw2017_uu_help
+
+
+/**
+ * Implementation of hook_init().
+ *
+ * These includes do not need to be loaded for cached pages.
+ */
+function pp_btw2017_uu_init() {
+  // Add necessary CSS and JS.
+  // TODO: These shouldn't be loaded on every page, but block caching omits
+  // CSS and JS files that would be otherwise added.
+  drupal_add_css(drupal_get_path('module', 'pp_btw2017_uu') .'/pp_btw2017_uu.css');
+  drupal_add_js(drupal_get_path('module', 'pp_btw2017_uu') .'/pp_btw2017_uu.js');
+
+  // prevent caching
+  #$GLOBALS['conf']['cache'] = FALSE;
+}
+
+
+/**
+* Valid permissions for this module
+* @return array An array of valid permissions for the pp_btw2017_uu module
+*/
+
+function pp_btw2017_uu_perm() {
+  return array('administer pp_btw2017_uu');
+} // function pp_btw2017_uu_perm()
+
+
+/**
+* Generate HTML for the pp_btw2017_uu block
+* @param op the operation from the URL
+* @param delta offset
+* @returns block HTML
+*/
+function pp_btw2017_uu_block($op = 'list', $delta = '', $edit = array()) {
+	// listing of blocks, such as on the admin/block page
+		#echo $op."\n";
+		#print_r($_GET);
+		switch ($op) {
+			case "list":
+				$block[0]["info"] = "Piraten - ".t('BTW 2017 UU Block');
+				return $block;
+
+			case "view":
+				$params = array();
+				if (variable_get('pp_btw2017_landesliste_start', NULL))
+					$params[] = "'ls'";
+				if (variable_get('pp_btw2017_landesliste_end', NULL))
+					$params[] = "'le'";
+				for ($wk = 1; $wk<=55; $wk++) {
+					if (variable_get('pp_btw2017_wk'.$wk, NULL))
+						$params[] = $wk;
+				}
+				$params = implode(", ", $params);
+			
+				$block_content = "<div id='btw2017_uu'></div>\n";
+				$block_content .= "<script type='text/javascript'>\n";
+				$block_content .= "btw2017_show([".$params."]);\n";
+				$block_content .= "</script>\n";
+
+				$block['subject'] = t('Unterstützungsunterschriften');
+				$block['content'] = $block_content;
+				return $block;
+		}
+}
+
+?>
